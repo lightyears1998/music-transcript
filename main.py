@@ -41,23 +41,26 @@ def cache(path, data=None):
             f.write(yaml.dump(data, Dumper=YamlDumper, allow_unicode=True))
         return data
 
-def cache_song_list(list_id, data=None):
-    path = get_path("playlists/{}.yaml".format(str(list_id)))
-    return cache(path, data)
+def cache_playlist(playlist_id, playlist=None):
+    path = get_path("playlists/{}.yaml".format(playlist_id))
+    return cache(path, playlist)
 
-def get_song_list(list_id: int) -> list[int]:
-    cache = cache_song_list(list_id)
+def get_playlist(playlist_id: int) -> list[int]:
+    cache = cache_playlist(playlist_id)
     if cache:
         return cache
     else:
         out = requests.post(API + "/playlist/detail", {
-            "id": str(list_id),
+            "id": str(playlist_id),
             "cookie": cookie
         })
 
         song_list = out.json()
-        return cache_song_list(list_id, song_list)
+        return cache_playlist(playlist_id, song_list)
 
+def cache_lyrics(song_id: int, lyrics=None):
+    path = get_path("lyrics/{}.yaml".format(song_id))
+    return cache(path, lyrics)
 
 def get_lyrics(song_id: int) -> None:
     out = requests.post(API + "/lyric", {
@@ -69,5 +72,5 @@ def get_lyrics(song_id: int) -> None:
 
 if __name__ == "__main__":
     bootstrap()
-    get_song_list(162317931)
+    list = get_playlist(162317931)
     # get_lyrics(572468962)
