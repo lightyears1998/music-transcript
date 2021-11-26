@@ -10,5 +10,6 @@ def detect_language(text: str):
             return lang
     return "zh-cn"
 
+
 if __name__ == "__main__":
     pass
