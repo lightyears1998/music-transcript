@@ -1,8 +1,8 @@
 # Music Transcript
 
-Music Transcript is a music transcript da yo! Heng heng~
+Music Transcript is a music transcript da yo! Heng heng~ (Currently works for NetEaseCloudMusic only.)
 
-Currently works for NetEaseCloudMusic only.
+@lightyears1998 is too lazy to write a README, so ah...
 
 ## Dependencies
 
