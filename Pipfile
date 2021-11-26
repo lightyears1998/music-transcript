@@ -13,4 +13,4 @@ pyyaml = "*"
 python_version = "3"
 
 [scripts]
-start = "python main.py"
+start = "python __main__.py"
