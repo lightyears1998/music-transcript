@@ -16,3 +16,8 @@ Music Transcript is a music transcript da yo! Heng heng~ (Currently works for Ne
 (cd api_server && npm start) &
 pipenv run start # or manually install python dependencies and exec `python __main__.py`
 ```
+
+![A wordcloud containing noises](./docs/noisy-wordcloud.png)
+
+I have to admit that there are some noises in the picture above.
+However... that's all for today!
