@@ -26,7 +26,7 @@ def get_path(path):
 def bootstrap():
     print("Using DATA_DIR", DATA_DIR)
 
-    dirs = ["lyrics", "playlists"]
+    dirs = ["lyrics", "playlists", "derivation/lyrics"]
     dirs = list(map(lambda dir: get_path(dir), dirs))
     for dir in dirs:
         os.makedirs(dir, exist_ok=True)
