@@ -9,7 +9,7 @@ def extract_lyrics_text(raw_lyrics: str):
     lines = raw_lyrics.split('\n')
     for i in range(len(lines)):
         lines[i] = lines[i].strip()
-        pattern = r"\[\d{2}\:\d{2}(?:\.\d+)?\](.*)"
+        pattern = r"(?:\[\d{2}\:\d{2}(?:\.\d+)?\])+(.*)"
         match = re.search(pattern, lines[i])
         if match and len(match.groups()) >= 1:
             lines[i] = match.group(1).strip()
