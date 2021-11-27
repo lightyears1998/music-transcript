@@ -1,11 +1,12 @@
 import os
 import re
-from fontTools.misc.loggingTools import configLogger
+from typing import Dict
 import jieba
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from music_transcript.util import load_yaml
 from .config import *
+from .util import detect_language
 
 
 def extract_lyrics_text(raw_lyrics: str):
@@ -19,7 +20,7 @@ def extract_lyrics_text(raw_lyrics: str):
     return '\n'.join(lines)
 
 
-def extract_lyrics_text_for_all():
+def extract_all_lyrics_text():
     origin_lyrics_path = get_path("lyrics")
     filenames = os.listdir(origin_lyrics_path)
     for filename in filenames:
@@ -34,22 +35,41 @@ def extract_lyrics_text_for_all():
             f.write(extracted_lyrics)
 
 
-def cut_text_for_all():
+def cut_all_text() -> Dict[str, str]:
     dir = get_path("derivation/lyrics")
-    text = ''
+
+    text = {}
+    for lang in VALID_LANGUAGES:
+        text[lang] = ''
+
     for filename in os.listdir(dir):
         path = os.path.join(dir, filename)
         with open(path, 'r', encoding="utf8") as f:
-            content = f.read()
-            content = ' '.join(jieba.cut(content))
-            text = text + '\n' + content.strip()
+            content = f.read().strip()
+            if len(content) == 0:
+                continue
+
+            content_lang = detect_language(content)
+            if content_lang == 'zh-cn':
+                content = ' '.join(jieba.cut(content))
+                text['zh-cn'] = text['zh-cn'] + '\n' + content
+            elif content_lang == 'ja':
+                text['ja'] = text['ja'] + '\n' + content
+            elif content_lang == 'en':
+                text['en'] = text['en'] + '\n' + content
+            else:
+                pass
     return text
 
 
-def generate_word_cloud(text):
-    wordcloud = WordCloud(width=1920, height=1080, scale=2, background_color="white", max_words=2000, font_path=CJK_FONT)
-    wordcloud.generate(text)
-    return wordcloud
+def generate_wordclouds(text):
+    wordclouds = {}
+    for lang in VALID_LANGUAGES:
+        if len(text[lang]) == 0:
+            continue
+        wordclouds[lang] = WordCloud(width=1920, height=1080, scale=2, background_color="white", max_words=2000, font_path=UNICODE_FONT, stopwords=STOPWORDS[lang])
+        wordclouds[lang].generate(text[lang])
+    return wordclouds
 
 
 def show_wordcloud(wordcloud):

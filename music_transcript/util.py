@@ -4,6 +4,7 @@ try:
 except ImportError:
     from yaml import YamlLoader, YamlDumper
 import langdetect
+from .config import *
 
 
 def load_yaml(path: str):
@@ -16,7 +17,7 @@ def dump_yaml(data: any):
 
 
 def detect_language(text: str):
-    possible_langs = ["zh-cn", "ja", "en", "de", "fr"]
+    possible_langs = VALID_LANGUAGES
     detected_possible_langs = langdetect.detect_langs(text)
     for lang in detected_possible_langs:
         lang = str(lang).split(':')[0]

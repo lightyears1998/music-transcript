@@ -20,7 +20,58 @@ def pre_process_cookie():
 
 COOKIE = pre_process_cookie()
 
-CJK_FONT = "C:\Windows\Fonts\SourceHanSans.ttc"
+UNICODE_FONT = "C:\Windows\Fonts\SourceHanSans.ttc"
+
+VALID_LANGUAGES = ["zh-cn", "en", "ja"]
+
+
+STOPWORDS = {
+    "zh-cn": """
+    我
+    你
+    他
+    她
+    的
+    谁
+    了
+    那
+    有
+    没有
+    却
+    是
+    不是
+    是不是
+    与
+    和
+    啦
+    在
+    也
+    都
+    着
+    又
+    还
+    要
+    去
+    就
+    把
+    来
+    到
+    最
+    啊
+    什么
+    不
+    这""",
+    "en": """
+    you
+    I
+    he""",
+    "ja": """
+    """
+}
+for lang in STOPWORDS.keys():
+    words = STOPWORDS[lang].split('\n')
+    words = map(lambda word: word.strip(), words)
+    STOPWORDS[lang] = set(words)
 
 
 def get_path(path):
