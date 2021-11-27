@@ -7,6 +7,8 @@ name = "pypi"
 requests = "*"
 pyyaml = "*"
 jieba = "*"
+wordcloud = "*"
+matplotlib = "*"
 
 [dev-packages]
 

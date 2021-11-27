@@ -1,4 +1,6 @@
 import os
+import logging
+import jieba
 
 
 API = os.getenv("NETEASE_API") or "http://localhost:3000"
@@ -18,15 +20,27 @@ def pre_process_cookie():
 
 COOKIE = pre_process_cookie()
 
+CJK_FONT = "C:\Windows\Fonts\SourceHanSans.ttc"
+
 
 def get_path(path):
     return os.path.normpath("{}/{}".format(DATA_DIR, path))
 
 
-def bootstrap():
+def __init_jieba():
+    jieba.setLogLevel(logging.INFO)
+    jieba.initialize()
+
+
+def __create_data_direactory():
     print("Using DATA_DIR", DATA_DIR)
 
     dirs = ["lyrics", "playlists", "derivation/lyrics"]
     dirs = list(map(lambda dir: get_path(dir), dirs))
     for dir in dirs:
         os.makedirs(dir, exist_ok=True)
+
+
+def bootstrap():
+    __init_jieba()
+    __create_data_direactory()
