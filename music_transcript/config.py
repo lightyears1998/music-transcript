@@ -9,16 +9,17 @@ API = os.getenv("NETEASE_API") or "http://localhost:3000"
 DATA_DIR = os.path.normpath(os.getenv("MUSIC_TRANSCRIPT_DATA_DIR") or "{}/data".format(os.getcwd()))
 
 RAW_COOKIE = os.getenv("NETEASE_COOKIE") or \
-    r"JSESSIONID-WYYY=aaaa; KEY2=bbbb; KEY3=cccc" # 请求 https://music.163.com/xxxapi/ 时用的 Cookie
+    r"JSESSIONID-WYYY=aaaa; KEY2=bbbb; KEY3=cccc" # cookies used in https://music.163.com/xxxapi/
 
 
-def pre_process_cookie():
-    # Binaryify / NeteaseCloudMusicApi 会把 "A=aaaa; B=bbbb" 形式的 Cookie 处理为 { "A": "aaaa", " B": "bbbb" }，
-    # 第二个键 " B" 不符合 Cookie 规范，故需要对 Cookie 进行预处理，去掉 Cookie 各项之间的空格。
+def __pre_process_cookie():
+    # `Binaryify / NeteaseCloudMusicApi` handles cookies of the form `A=aaaa; B=bbbb` as `{ "A": "aaaa", " B": "bbbb" }`.
+    # The second key `" B"` which contains a space in its name does not conform to the cookie specification and result in bugs,
+    # so the cookie needs to be pre-processed to remove the spaces between the cookie items.
     return ''.join(RAW_COOKIE.split(' '))
 
 
-COOKIE = pre_process_cookie()
+COOKIE = __pre_process_cookie()
 
 UNICODE_FONT = "C:\Windows\Fonts\SourceHanSans.ttc"
 
