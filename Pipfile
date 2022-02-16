@@ -9,6 +9,8 @@ pyyaml = "*"
 jieba = "*"
 wordcloud = "*"
 matplotlib = "*"
+python-dotenv = "*"
+langdetect = "*"
 
 [dev-packages]
 autopep8 = "*"

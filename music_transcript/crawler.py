@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import List, Tuple
 import requests
 from functools import wraps
 import yaml
@@ -48,7 +48,7 @@ def caching(cache_path_builder):
 
 
 @caching(lambda playlist_id: get_path("playlists/{}.yaml".format(playlist_id)))
-def get_playlist(playlist_id: int) -> list[int]:
+def get_playlist(playlist_id: int) -> List[int]:
     res = requests.post(API + "/playlist/detail", {
         "id": str(playlist_id),
         "cookie": COOKIE

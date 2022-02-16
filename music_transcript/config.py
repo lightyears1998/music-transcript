@@ -9,7 +9,7 @@ API = os.getenv("NETEASE_API") or "http://localhost:3000"
 DATA_DIR = os.path.normpath(os.getenv("MUSIC_TRANSCRIPT_DATA_DIR") or "{}/data".format(os.getcwd()))
 
 RAW_COOKIE = os.getenv("NETEASE_COOKIE") or \
-    r"JSESSIONID-WYYY=aaaa; KEY2=bbbb; KEY3=cccc" # cookies used in https://music.163.com/xxxapi/
+    r"MUSIC_U=aaaa; NMTID=bbbb" # cookies used in https://music.163.com/xxxapi/
 
 
 def __pre_process_cookie():
